@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { app, writeUserData } from "./FirebaseDB.js";
+import { app, writeUserData } from "../FirebaseDB.js";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 
 

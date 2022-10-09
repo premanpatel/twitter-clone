@@ -1,6 +1,9 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import {getDatabase, ref, set } from "firebase/database";
+import { getDatabase, ref, set } from "firebase/database";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
+
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -26,3 +29,37 @@ export function writeUserData(userID, name, email){
         email: email,
     });
 }
+
+export function createNewUser(auth, email, password, username){
+  createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        writeUserData(user.uid, username, email);
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+
+        console.warn(errorCode);
+        console.warn(errorMessage);
+
+        // ..
+      });
+}
+
+export function logInUser(auth, email, password){
+  signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        const user = userCredential.user;
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+      });
+}
+
+

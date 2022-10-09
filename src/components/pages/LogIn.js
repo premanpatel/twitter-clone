@@ -18,19 +18,10 @@ function SignUp() {
 
   const auth = getAuth(app);
 
-  const logInUser = (e) => {
+  const logInUserHandler = (e) => {
     e.preventDefault();
     console.log("button worked");
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        // ...
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-      });
+    
     console.log("user logged in");
   };
 
@@ -59,7 +50,7 @@ function SignUp() {
       <Form.Group className="mb-3" controlId="formBasicCheckbox">
         <Form.Check type="checkbox" label="Check me out" />
       </Form.Group>
-      <Button variant="primary" type="submit" onClick={logInUser}>
+      <Button variant="primary" type="submit" onClick={logInUserHandler}>
         Submit
       </Button>
     </Form>

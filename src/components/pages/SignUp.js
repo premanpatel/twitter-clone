@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { app, writeUserData } from "../FirebaseDB.js";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { app, createNewUser } from "../FirebaseDB.js";
+import { getAuth } from "firebase/auth";
 
 function SignUp() {
     
@@ -22,26 +22,10 @@ function SignUp() {
 
   const auth = getAuth(app);
 
-  const createUser = (e) => {
+  const createUserHandler = (e) => {
     e.preventDefault()
-    console.log("button worked");
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        const user = userCredential.user;
-        writeUserData(user.uid, username, email);
-        // ...
-      })
-      .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-
-        console.warn(errorCode);
-        console.warn(errorMessage);
-
-        // ..
-      });
-      console.log("user created");
+    createNewUser(auth, email, password, username)
+    console.log("user created");
   }
 
   return (
@@ -81,7 +65,7 @@ function SignUp() {
       <Button
         variant="primary"
         type="submit"
-        onClick={createUser}
+        onClick={createUserHandler}
       >
         Submit
       </Button>

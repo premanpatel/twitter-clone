@@ -1,22 +1,19 @@
 import React, { Component } from "react";
+import "./TweetBox.css";
 
 export default class TweetBox extends Component {
   render() {
     return (
       <div>
         <form>
-          <input type="text" placeholder="What's your Tweet?" />
-          <div>
-            <button
-              style={{
-                backgroundColor: "#1DA1F2",
-                width: "70px",
-                height: "30px",
-                color: "white",
-              }}
-            >
-              Tweet
-            </button>
+          <div class="tweetBox">
+            <textarea
+              multiline
+              class="textBox"
+              type="text"
+              placeholder="What's your Tweet?"
+            />
+            <button class="tweetBtn">Tweet</button>
           </div>
         </form>
       </div>

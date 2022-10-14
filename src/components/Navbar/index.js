@@ -7,7 +7,6 @@ import {
   NavBtn,
   NavBtnLink,
 } from "./NavbarElements";
-import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 const Navbar = () => {
 

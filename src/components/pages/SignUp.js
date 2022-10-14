@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { app, createNewUser } from "../FirebaseDB.js";
-import { getAuth } from "firebase/auth";
+import { auth, createNewUser } from "../FirebaseDB.js";
 
 function SignUp() {
     
@@ -19,8 +18,6 @@ function SignUp() {
   function usernameHandler(val) {
     setusername(val.target.value);
   }
-
-  const auth = getAuth(app);
 
   const createUserHandler = (e) => {
     e.preventDefault()

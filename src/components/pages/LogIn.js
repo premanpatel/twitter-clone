@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import { app, writeUserData } from "../FirebaseDB.js";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../FirebaseDB.js";
+import { getAuth } from "firebase/auth";
 
 
 function SignUp() {
@@ -16,7 +16,6 @@ function SignUp() {
     setpassword(val.target.value);
   }
 
-  const auth = getAuth(app);
 
   const logInUserHandler = (e) => {
     e.preventDefault();

@@ -1,10 +1,11 @@
+import React, {  } from "react";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import TweetBox from "./components/pages/TweetBox.js";
 import SignUp from "./components/pages/SignUp.js";
 import LogIn from "./components/pages/LogIn.js";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Navbar from './components/Navbar';
+import Navbar from "./components/Navbar";
 
 function App() {
   return (

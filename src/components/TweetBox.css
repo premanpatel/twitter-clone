@@ -1,7 +1,7 @@
 .tweetBox{
     display:flex;
     flex-direction: column;
-    width: 60%;
+    width: 40%;
     height: 250px;
     margin: auto;
     background-color: #E6E6E6;
@@ -20,7 +20,7 @@
     background-color: #E6E6E6;
     border: none;
     outline: none;
-    width: 500px;
+    width: 100%;
 }
 
 .tweetBtn {

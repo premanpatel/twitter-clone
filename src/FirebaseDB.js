@@ -1,6 +1,5 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, set } from "firebase/database";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -11,6 +10,12 @@ import {
   collection,
   addDoc,
   serverTimestamp,
+  query,
+  getDoc,
+  setDoc,
+  doc,
+  updateDoc,
+  arrayUnion,
 } from "firebase/firestore";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -30,16 +35,16 @@ const firebaseConfig = {
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
 const firestore = getFirestore(app);
-const tweets = collection(firestore, "Tweets");
 export const auth = getAuth(app);
-const db = getDatabase();
 
 // Write user data to Realtime Database
-export function writeUserData(userID, name, email) {
-  const reference = ref(db, "users/" + userID);
-  set(reference, {
+export async function writeUserData(userID, name, email, tweetID) {
+  await setDoc(doc(firestore, "users", userID), {
     username: name,
     email: email,
+    tweets: [],
+    followers: [],
+    following: [],
   });
 }
 
@@ -76,7 +81,8 @@ export function createNewUser(auth, email, password, username) {
     .then((userCredential) => {
       // Signed in
       const user = userCredential.user;
-      writeUserData(user.uid, username, email);
+      const tweetIDs = ["tweet1", "tweet2", "tweet3"];
+      writeUserData(user.uid, username, email, tweetIDs);
       // ...
     })
     .catch((error) => {
@@ -101,20 +107,39 @@ export function logInUser(email, password) {
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
+      console.error("error code: " + errorCode);
+      console.error("error message: " + errorMessage);
     });
+}
+
+// add tweet to user profile
+async function addTweetToUser(docID, userID) {
+  const user = doc(firestore, "users", userID);
+  try {
+    await updateDoc(user, {
+      tweets: arrayUnion(docID),
+    });
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 // Upload tweet to firestore database
 export async function uploadTweet(tweet, uid) {
-  try {
-    const docRef = await addDoc(collection(firestore, uid), {
-      time: serverTimestamp(),
-      tweet: tweet,
-    });
+  const docRef = await addDoc(collection(firestore, "tweets"), {
+    time: serverTimestamp(),
+    tweet: tweet,
+  });
+  console.log("Document written with ID: ", docRef.id);
+  addTweetToUser(docRef.id, uid);
+}
 
-    console.log("Document written with ID: ", docRef.id);
-    console.log("tweet uploaded");
-  } catch (e) {
-    console.error("Error adding document: ", e);
-  }
+// still working on this
+async function getTweet(uid) {
+  const tweetsCollection = query(collection(firestore, uid));
+  const querySnapshot = await getDoc(tweetsCollection);
+  querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    console.log(doc.id, " => ", doc.data());
+  });
 }

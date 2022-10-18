@@ -1,19 +1,16 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getDatabase, ref, set, onValue } from "firebase/database";
+import { getDatabase, ref, set } from "firebase/database";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   getAuth,
-  onAuthStateChanged,
-  updateProfile,
 } from "firebase/auth";
 import {
   getFirestore,
   collection,
   addDoc,
-  doc,
-  setDoc,
+  serverTimestamp,
 } from "firebase/firestore";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -48,7 +45,7 @@ export function writeUserData(userID, name, email) {
 
 // Check if user logged in
 
-export function isLoggedIn(){
+export function isLoggedIn() {
   const currUser = auth.currentUser;
   if (currUser) {
     return true;
@@ -94,7 +91,7 @@ export function createNewUser(auth, email, password, username) {
 }
 
 // Log user in
-export function logInUser(auth, email, password) {
+export function logInUser(email, password) {
   signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       // Signed in
@@ -110,11 +107,11 @@ export function logInUser(auth, email, password) {
 // Upload tweet to firestore database
 export async function uploadTweet(tweet, uid) {
   try {
-    const docRef = await addDoc(tweets, {
-      time: Date.now(),
+    const docRef = await addDoc(collection(firestore, uid), {
+      time: serverTimestamp(),
       tweet: tweet,
-      UID: uid,
     });
+
     console.log("Document written with ID: ", docRef.id);
     console.log("tweet uploaded");
   } catch (e) {

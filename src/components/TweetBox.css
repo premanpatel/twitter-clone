@@ -1,0 +1,35 @@
+.tweetBox{
+    display:flex;
+    flex-direction: column;
+    width: 60%;
+    height: 250px;
+    margin: auto;
+    background-color: #E6E6E6;
+    border-radius: 30px;
+    margin-top: 20px;
+}
+
+.textBox{
+    flex: 1;
+    align-self: center;
+    text-align: left;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    padding-left: 20px;
+    resize: none;
+    background-color: #E6E6E6;
+    border: none;
+    outline: none;
+    width: 500px;
+}
+
+.tweetBtn {
+    display: flex;
+    width: 100px;
+    height: 40px;    
+    align-self: right;
+    text-align: center;
+    background-color: #1DA1F1;
+    border: none;
+    border-radius: 20px;
+}

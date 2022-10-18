@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Nav,
   NavLink,
@@ -7,14 +7,26 @@ import {
   NavBtn,
   NavBtnLink,
 } from "./NavbarElements";
+import { isLoggedIn } from "../../FirebaseDB";
+
+
 
 const Navbar = () => {
+
+  const [isUserLoggedIn, setisUserLoggedIn] = useState(false);
+
+  function changeLoginBtn() {
+    if (isLoggedIn()) {
+      isUserLoggedIn(true);
+    } else {
+      setisUserLoggedIn(false);
+    }
+  }
 
   return (
     <>
       <Nav>
         <Bars />
-
         <NavMenu>
           <NavLink to="/" activeStyle>
             Twitter Clone
@@ -27,6 +39,7 @@ const Navbar = () => {
         </NavMenu>
         <NavBtn>
           <NavBtnLink to="/LogIn">Sign In</NavBtnLink>
+          {isUserLoggedIn && <NavBtnLink to="/LogIn">Log Out</NavBtnLink>}
         </NavBtn>
       </Nav>
     </>

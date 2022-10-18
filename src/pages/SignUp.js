@@ -4,7 +4,6 @@ import Form from "react-bootstrap/Form";
 import { auth, createNewUser } from "../FirebaseDB.js";
 
 function SignUp() {
-    
   const [email, setemail] = useState();
   const [password, setpassword] = useState();
   const [username, setusername] = useState();
@@ -20,10 +19,10 @@ function SignUp() {
   }
 
   const createUserHandler = (e) => {
-    e.preventDefault()
-    createNewUser(auth, email, password, username)
+    e.preventDefault();
+    createNewUser(auth, email, password, username);
     console.log("user created");
-  }
+  };
 
   return (
     <Form>
@@ -59,11 +58,7 @@ function SignUp() {
       <Form.Group className="mb-3" controlId="formBasicCheckbox">
         <Form.Check type="checkbox" label="Check me out" />
       </Form.Group>
-      <Button
-        variant="primary"
-        type="submit"
-        onClick={createUserHandler}
-      >
+      <Button variant="primary" type="submit" onClick={createUserHandler}>
         Submit
       </Button>
     </Form>

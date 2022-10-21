@@ -1,16 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import "./TwitterFeed.css";
 
-function TwitterFeed() {
-
+function TwitterFeed(props) {
+  /* let username = props.username;
+  let tweet = props.tweet; */
   return (
-    <div class="tweetFeed">
-      <div class="header">
-        <label> username </label>
-        <button class="followBtn"> follow </button>
+    <>
+      <div class="tweetFeed">
+        <div class="header">
+          <label> {props.username} </label>
+          <button class="followBtn"> follow </button>
+        </div>
+        <p class="tweet"> {props.tweet} </p>
       </div>
-      <p class="tweet"> i made this tweet with love </p>
-    </div>
+    </>
   );
 }
 

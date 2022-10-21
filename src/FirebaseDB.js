@@ -16,6 +16,7 @@ import {
   doc,
   updateDoc,
   arrayUnion,
+  getDocs,
 } from "firebase/firestore";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -81,8 +82,7 @@ export function createNewUser(auth, email, password, username) {
     .then((userCredential) => {
       // Signed in
       const user = userCredential.user;
-      const tweetIDs = ["tweet1", "tweet2", "tweet3"];
-      writeUserData(user.uid, username, email, tweetIDs);
+      writeUserData(user.uid, username, email, []);
       // ...
     })
     .catch((error) => {
@@ -125,21 +125,50 @@ async function addTweetToUser(docID, userID) {
 }
 
 // Upload tweet to firestore database
-export async function uploadTweet(tweet, uid) {
+export async function uploadTweet(tweet, uid, username) {
   const docRef = await addDoc(collection(firestore, "tweets"), {
     time: serverTimestamp(),
     tweet: tweet,
+    userID: uid,
+    username: username
   });
   console.log("Document written with ID: ", docRef.id);
   addTweetToUser(docRef.id, uid);
 }
 
-// still working on this
-async function getTweet(uid) {
-  const tweetsCollection = query(collection(firestore, uid));
-  const querySnapshot = await getDoc(tweetsCollection);
-  querySnapshot.forEach((doc) => {
-    // doc.data() is never undefined for query doc snapshots
-    console.log(doc.id, " => ", doc.data());
-  });
+let feed;
+
+// gets all tweets from firestore
+export async function getTweets() {
+  try {
+    const tweetsCollection = query(collection(firestore, "tweets"));
+    const querySnapshot = await getDocs(tweetsCollection);
+    var usersTweets = {};
+    querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      //usersTweets.push(doc.data());
+      usersTweets[doc.id] = doc.data();
+      //console.log(doc.id, " => ", doc.data());
+    });
+    //console.log(Object.entries(usersTweets));
+   /*  feed = usersTweets;
+    console.log(feed); */
+    return Object.entries(usersTweets);
+  } catch (error) {
+    console.error(error);
+  }
 }
+
+export async function getUsername(uid){
+  const docRef = doc(firestore, "users", uid);
+  const docSnap = await getDoc(docRef);
+  if (docSnap.exists()) {
+    return docSnap.data().username;
+  } else {
+    // doc.data() will be undefined in this case
+    console.log("No such document!");
+  }
+}
+console.log(getUsername("ob4LxqoTT2XXW2gS6DTeSmxaLJn1"));
+
+

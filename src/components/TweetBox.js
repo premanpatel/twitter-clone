@@ -23,9 +23,9 @@ function TweetBox() {
     console.log("entered handler");
     if (isUserLoggedIn) {
       uploadTweet(tweetTextBox, getUid());
-      /* setTimeout(() => {
+      setTimeout(() => {
         window.location.reload(false);
-      }, 500); */
+      }, 500);
     }
     else{
       alert("Please log in!");

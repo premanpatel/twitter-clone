@@ -27,8 +27,10 @@ function SignUp() {
     setemail("");
     setpassword("");
     setusername("");
-    window.location.reload(false);
-    navigate('/');
+    navigate("/");
+    setTimeout(() => {
+      window.location.reload(false);
+    }, 500);
   };
 
   return (

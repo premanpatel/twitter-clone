@@ -27,8 +27,8 @@ function SignUp() {
     setemail("");
     setpassword("");
     setusername("");
+    window.location.reload(false);
     navigate('/');
-    //window.location.reload(false);
   };
 
   return (

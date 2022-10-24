@@ -90,6 +90,7 @@ export function createNewUser(auth, email, password, username) {
       // Signed in
       const user = userCredential.user;
       writeUserData(user.uid, username, email, []);
+      logInUser(email, password)
       alert("Created new user and signed in");
       // ...
     })

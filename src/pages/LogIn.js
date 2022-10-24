@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { logInUser } from "../FirebaseDB";
-import {  } from "firebase/auth";
+import {} from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
-function SignUp() {
+function LogIn() {
   const [email, setemail] = useState();
   const [password, setpassword] = useState();
+  const navigate = useNavigate();
 
   function emailHandler(val) {
     setemail(val.target.value);
@@ -22,6 +24,7 @@ function SignUp() {
     console.log("user logged in");
     setemail("");
     setpassword("");
+    navigate('/');
   };
 
   return (
@@ -49,11 +52,15 @@ function SignUp() {
       <Form.Group className="mb-3" controlId="formBasicCheckbox">
         <Form.Check type="checkbox" label="Check me out" />
       </Form.Group>
-      <Button variant="primary" type="submit" onClick={logInUserHandler}>
+      <Button
+        variant="primary"
+        type="submit"
+        onClick={logInUserHandler}
+      >
         Submit
       </Button>
     </Form>
   );
 }
 
-export default SignUp;
+export default LogIn;

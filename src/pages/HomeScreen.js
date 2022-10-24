@@ -9,10 +9,10 @@ function HomeScreen() {
   useEffect(() => {
     const getData = async () => {
       const data = await getTweets();
+      console.log(data);
       let feed = data.map((element) => (
         <TwitterFeed key={element[0]} username={"@" + element[1].username} tweet={element[1].tweet} />
       ));
-      console.log(typeof feed);
       setRenderFeed(feed);
     };
     getData();

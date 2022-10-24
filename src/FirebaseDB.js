@@ -111,15 +111,17 @@ export function logInUser(email, password) {
       // Signed in
       //const user = userCredential.user;
       // ...
-      window.location.reload(false);
+      alert("You are logged in!");
+      return true;
     })
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
       console.error("error code: " + errorCode);
       console.error("error message: " + errorMessage);
+      alert("This account does not exist please use signup instead")
+      return false;
     });
-    alert("You are logged in!");
 }
 
 // log out current user

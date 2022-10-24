@@ -20,11 +20,15 @@ function LogIn() {
   const logInUserHandler = (e) => {
     e.preventDefault();
     console.log("button worked");
-    logInUser(email, password);
-    console.log("user logged in");
-    setemail("");
-    setpassword("");
-    navigate('/');
+    if(logInUser(email, password)){
+      window.location.reload(false);
+      console.log("user logged in");
+      setemail("");
+      setpassword("");
+      navigate('/');
+    }else{
+      
+    }
   };
 
   return (

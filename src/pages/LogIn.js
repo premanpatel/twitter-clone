@@ -21,13 +21,13 @@ function LogIn() {
     e.preventDefault();
     console.log("button worked");
     if(logInUser(email, password)){
-      window.location.reload(false);
       console.log("user logged in");
       setemail("");
       setpassword("");
       navigate('/');
+      window.location.reload(false);
     }else{
-      
+
     }
   };
 

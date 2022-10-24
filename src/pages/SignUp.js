@@ -28,6 +28,7 @@ function SignUp() {
     setpassword("");
     setusername("");
     navigate('/');
+    window.location.reload(false);
   };
 
   return (

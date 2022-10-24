@@ -90,7 +90,7 @@ export function createNewUser(auth, email, password, username) {
       // Signed in
       const user = userCredential.user;
       writeUserData(user.uid, username, email, []);
-      logInUser(email, password)
+      logInUser(email, password);
       alert("Created new user and signed in");
       // ...
     })
@@ -100,6 +100,7 @@ export function createNewUser(auth, email, password, username) {
 
       console.warn(errorCode);
       console.warn(errorMessage);
+      alert("user not created");
 
       // ..
     });
@@ -120,20 +121,22 @@ export function logInUser(email, password) {
       const errorMessage = error.message;
       console.error("error code: " + errorCode);
       console.error("error message: " + errorMessage);
-      alert("This account does not exist please use signup instead")
+      alert("This account does not exist please use signup instead");
       return false;
     });
 }
 
 // log out current user
-export function logOutUser(){
-  signOut(auth).then(() => {
-    // Sign-out successful.
-    alert("Sign out successful!")
-    window.location.reload(false);
-  }).catch((error) => {
-    // An error happened.
-  });
+export function logOutUser() {
+  signOut(auth)
+    .then(() => {
+      // Sign-out successful.
+      alert("Sign out successful!");
+      window.location.reload(false);
+    })
+    .catch((error) => {
+      // An error happened.
+    });
 }
 
 // add tweet to user profile

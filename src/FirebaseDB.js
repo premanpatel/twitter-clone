@@ -4,6 +4,8 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   getAuth,
+  onAuthStateChanged,
+  signOut,
 } from "firebase/auth";
 import {
   getFirestore,
@@ -17,6 +19,7 @@ import {
   updateDoc,
   arrayUnion,
   getDocs,
+  orderBy,
 } from "firebase/firestore";
 
 // TODO: Add SDKs for Firebase products that you want to use
@@ -52,12 +55,16 @@ export async function writeUserData(userID, name, email, tweetID) {
 // Check if user logged in
 
 export function isLoggedIn() {
-  const currUser = auth.currentUser;
-  if (currUser) {
-    return true;
-  } else {
-    return false;
-  }
+  return new Promise((resolve, reject) => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        resolve(true);
+      } else {
+        resolve(false);
+      }
+      unsubscribe();
+    });
+  });
 }
 
 // Get currently logged in user UID
@@ -83,6 +90,7 @@ export function createNewUser(auth, email, password, username) {
       // Signed in
       const user = userCredential.user;
       writeUserData(user.uid, username, email, []);
+      alert("Created new user and signed in");
       // ...
     })
     .catch((error) => {
@@ -101,8 +109,9 @@ export function logInUser(email, password) {
   signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       // Signed in
-      const user = userCredential.user;
+      //const user = userCredential.user;
       // ...
+      window.location.reload(false);
     })
     .catch((error) => {
       const errorCode = error.code;
@@ -110,6 +119,18 @@ export function logInUser(email, password) {
       console.error("error code: " + errorCode);
       console.error("error message: " + errorMessage);
     });
+    alert("You are logged in!");
+}
+
+// log out current user
+export function logOutUser(){
+  signOut(auth).then(() => {
+    // Sign-out successful.
+    alert("Sign out successful!")
+    window.location.reload(false);
+  }).catch((error) => {
+    // An error happened.
+  });
 }
 
 // add tweet to user profile
@@ -125,41 +146,36 @@ async function addTweetToUser(docID, userID) {
 }
 
 // Upload tweet to firestore database
-export async function uploadTweet(tweet, uid, username) {
+export async function uploadTweet(tweet, uid) {
   const docRef = await addDoc(collection(firestore, "tweets"), {
     time: serverTimestamp(),
     tweet: tweet,
     userID: uid,
-    username: username
+    username: await getUsername(uid),
   });
   console.log("Document written with ID: ", docRef.id);
   addTweetToUser(docRef.id, uid);
 }
 
-let feed;
-
 // gets all tweets from firestore
 export async function getTweets() {
   try {
-    const tweetsCollection = query(collection(firestore, "tweets"));
+    const tweetsCollection = query(
+      collection(firestore, "tweets"),
+      orderBy("time", "desc")
+    );
     const querySnapshot = await getDocs(tweetsCollection);
     var usersTweets = {};
     querySnapshot.forEach((doc) => {
-      // doc.data() is never undefined for query doc snapshots
-      //usersTweets.push(doc.data());
       usersTweets[doc.id] = doc.data();
-      //console.log(doc.id, " => ", doc.data());
     });
-    //console.log(Object.entries(usersTweets));
-   /*  feed = usersTweets;
-    console.log(feed); */
     return Object.entries(usersTweets);
   } catch (error) {
     console.error(error);
   }
 }
 
-export async function getUsername(uid){
+export async function getUsername(uid) {
   const docRef = doc(firestore, "users", uid);
   const docSnap = await getDoc(docRef);
   if (docSnap.exists()) {
@@ -169,6 +185,5 @@ export async function getUsername(uid){
     console.log("No such document!");
   }
 }
-console.log(getUsername("ob4LxqoTT2XXW2gS6DTeSmxaLJn1"));
 
-
+export default isLoggedIn;

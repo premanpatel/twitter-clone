@@ -22,6 +22,9 @@ function SignUp() {
     e.preventDefault();
     createNewUser(auth, email, password, username);
     console.log("user created");
+    setemail("");
+    setpassword("");
+    setusername("");
   };
 
   return (

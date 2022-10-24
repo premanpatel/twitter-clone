@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from "react";
 import TweetBox from "../components/TweetBox.js";
 import TwitterFeed from "../components/TwitterFeed.js";
-import { getTweets, getUsername } from "../FirebaseDB";
+import { getTweets } from "../FirebaseDB";
 
 function HomeScreen() {
   const [renderFeed, setRenderFeed] = useState();
-  const [username, setUsername] = useState();
   
   useEffect(() => {
     const getData = async () => {
       const data = await getTweets();
       let feed = data.map((element) => (
-        <TwitterFeed username={element[1].userID} tweet={element[1].tweet} />
+        <TwitterFeed key={element[0]} username={"@" + element[1].username} tweet={element[1].tweet} />
       ));
+      console.log(typeof feed);
       setRenderFeed(feed);
     };
-
     getData();
   }, []);
 
@@ -23,7 +22,6 @@ function HomeScreen() {
     <>
       <TweetBox />
       {renderFeed}
-      <button> print tweets </button>
     </>
   );
 }

@@ -20,6 +20,8 @@ function SignUp() {
     console.log("button worked");
     logInUser(email, password);
     console.log("user logged in");
+    setemail("");
+    setpassword("");
   };
 
   return (

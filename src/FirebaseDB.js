@@ -98,8 +98,8 @@ export function createNewUser(auth, email, password, username) {
       const errorCode = error.code;
       const errorMessage = error.message;
 
-      console.warn(errorCode);
-      console.warn(errorMessage);
+      console.error(errorCode);
+      console.error(errorMessage);
       alert("user not created");
 
       // ..

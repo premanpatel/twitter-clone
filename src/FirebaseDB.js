@@ -90,6 +90,9 @@ export function createNewUser(auth, email, password, username) {
       const user = userCredential.user;
       writeUserData(user.uid, username, email, []);
       alert("Created new user and signed in");
+      setTimeout(() => {
+        window.location.reload(false);
+      }, 500);
       // ...
     })
     .catch((error) => {
@@ -160,7 +163,6 @@ export async function uploadTweet(tweet, uid) {
   console.log("Document written with ID: ", docRef.id);
   addTweetToUser(docRef.id, uid);
 }
-
 
 // gets all tweets from firestore
 export async function getTweets() {

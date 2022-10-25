@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./TweetBox.css";
-import { uploadTweet, getUid, isLoggedIn } from "../FirebaseDB";
+import { uploadTweet, getUid, getUsername, isLoggedIn } from "../FirebaseDB";
 
 function TweetBox() {
   const [tweetTextBox, setTweetTextBox] = useState();
@@ -26,24 +26,22 @@ function TweetBox() {
       setTimeout(() => {
         window.location.reload(false);
       }, 500);
-    }
-    else{
+    } else {
       alert("Please log in!");
     }
   };
-
   return (
     <div>
       <form>
-        <div className="tweetBox">
+        <div class="tweetBox">
           <textarea
             multiline
-            className="textBox"
+            class="textBox"
             type="text"
             placeholder="What's your Tweet?"
             onChange={tweetTextBoxHandler}
           />
-          <button className="tweetBtn" onClick={tweetHandler}>
+          <button class="tweetBtn" onClick={tweetHandler}>
             Tweet
           </button>
         </div>

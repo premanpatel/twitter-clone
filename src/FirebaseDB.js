@@ -4,8 +4,8 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   getAuth,
-  onAuthStateChanged,
   signOut,
+  onAuthStateChanged,
 } from "firebase/auth";
 import {
   getFirestore,
@@ -66,7 +66,6 @@ export function isLoggedIn() {
     });
   });
 }
-
 // Get currently logged in user UID
 export function getUid() {
   if (isLoggedIn()) {
@@ -90,8 +89,7 @@ export function createNewUser(auth, email, password, username) {
       // Signed in
       const user = userCredential.user;
       writeUserData(user.uid, username, email, []);
-      //logInUser(email, password);
-      //alert("Created new user and signed in");
+      alert("Created new user and signed in");
       // ...
     })
     .catch((error) => {
@@ -113,15 +111,15 @@ export function logInUser(email, password) {
       // Signed in
       //const user = userCredential.user;
       // ...
+      window.location.reload(false);
       alert("You are logged in!");
-      return true;
     })
     .catch((error) => {
       const errorCode = error.code;
       const errorMessage = error.message;
       console.error("error code: " + errorCode);
       console.error("error message: " + errorMessage);
-      alert("This account does not exist please use signup instead");
+      alert(errorMessage);
       return false;
     });
 }
@@ -163,6 +161,8 @@ export async function uploadTweet(tweet, uid) {
   addTweetToUser(docRef.id, uid);
 }
 
+let feed;
+
 // gets all tweets from firestore
 export async function getTweets() {
   try {
@@ -173,8 +173,14 @@ export async function getTweets() {
     const querySnapshot = await getDocs(tweetsCollection);
     var usersTweets = {};
     querySnapshot.forEach((doc) => {
+      // doc.data() is never undefined for query doc snapshots
+      //usersTweets.push(doc.data());
       usersTweets[doc.id] = doc.data();
+      //console.log(doc.id, " => ", doc.data());
     });
+    //console.log(Object.entries(usersTweets));
+    /*  feed = usersTweets;
+    console.log(feed); */
     return Object.entries(usersTweets);
   } catch (error) {
     console.error(error);
@@ -182,14 +188,14 @@ export async function getTweets() {
 }
 
 export async function getUsername(uid) {
+  console.log(uid);
   const docRef = doc(firestore, "users", uid);
   const docSnap = await getDoc(docRef);
   if (docSnap.exists()) {
     return docSnap.data().username;
   } else {
     // doc.data() will be undefined in this case
-    console.log("No such document!");
+    console.log("No such user in firestore!");
+    return null;
   }
 }
-
-export default isLoggedIn;

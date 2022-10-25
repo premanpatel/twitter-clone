@@ -1,4 +1,4 @@
-import React, {  } from "react";
+import React, { useState } from "react";
 import "./TwitterFeed.css";
 
 function TwitterFeed(props) {
@@ -6,12 +6,12 @@ function TwitterFeed(props) {
   let tweet = props.tweet; */
   return (
     <>
-      <div className="tweetFeed">
-        <div className="header">
+      <div class="tweetFeed">
+        <div class="header">
           <label> {props.username} </label>
-          <button className="followBtn"> follow </button>
+          <button class="followBtn"> follow </button>
         </div>
-        <p className="tweet"> {props.tweet} </p>
+        <p class="tweet"> {props.tweet} </p>
       </div>
     </>
   );

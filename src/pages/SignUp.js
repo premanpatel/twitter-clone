@@ -28,9 +28,6 @@ function SignUp() {
     setpassword("");
     setusername("");
     navigate("/");
-    setTimeout(() => {
-      window.location.reload(false);
-    }, 500);
   };
 
   return (

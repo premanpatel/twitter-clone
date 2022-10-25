@@ -24,8 +24,7 @@ function LogIn() {
     console.log("user logged in");
     setemail("");
     setpassword("");
-    navigate('/');
-    window.location.reload(false);
+    navigate("/");
   };
 
   return (

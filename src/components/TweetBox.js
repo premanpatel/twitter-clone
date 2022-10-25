@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./TweetBox.css";
-import { uploadTweet, getUid, getUsername, isLoggedIn } from "../FirebaseDB";
+import { uploadTweet, getUid, isLoggedIn } from "../FirebaseDB";
 
 function TweetBox() {
   const [tweetTextBox, setTweetTextBox] = useState();

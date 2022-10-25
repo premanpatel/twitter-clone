@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import TweetBox from "../components/TweetBox.js";
 import TwitterFeed from "../components/TwitterFeed.js";
-import { getTweets, getUsername } from "../FirebaseDB";
+import { getTweets } from "../FirebaseDB";
 
 function HomeScreen() {
   const [renderFeed, setRenderFeed] = useState();

@@ -161,7 +161,6 @@ export async function uploadTweet(tweet, uid) {
   addTweetToUser(docRef.id, uid);
 }
 
-let feed;
 
 // gets all tweets from firestore
 export async function getTweets() {

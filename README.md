@@ -1,5 +1,5 @@
 # Use this link to use the site
-https://bespoke-centaur-95dba8.netlify.app/
+https://preman-twitter-clone.netlify.app/
 
 # Getting Started with Create React App
 
